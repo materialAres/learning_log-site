@@ -1,7 +1,7 @@
 """View functions allow us to send data from a database to a template, and show it in web pages, with a series of functionalities that we choose.
 Filly, through them we send an http request and we receive a response."""
 
-from django.shortcuts import render, redirect   # redirect allows the program to redirect to another page/url, in this case it redirects the user from the topic-submission page to the topics page.
+from django.shortcuts import render, redirect, get_object_or_404   # redirect allows the program to redirect to another page/url, in this case it redirects the user from the topic-submission page to the topics page.
 from django.contrib.auth.decorators import login_required
 from .models import Entry, Topic
 from .forms import TopicForm, EntryForm
@@ -31,7 +31,7 @@ def topics(request):
 @login_required
 def topic(request, topic_id):
     """Show a single topic and its entries"""
-    topic = Topic.objects.get(id=topic_id)
+    topic = get_object_or_404(Topic, id=topic_id)
 
     check_topic_owner(topic.owner, request.user)
 
