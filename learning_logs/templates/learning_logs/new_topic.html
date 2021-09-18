@@ -14,9 +14,12 @@
  <form action="{% url 'learning_logs:new_topic' %}" method='post' class="form"> <! The action tells dj where to send the data submitted>
   {% csrf_token %}   <!Some magic that prevents attacks>
   {% bootstrap_form form %}    <!Render form elements as a paragraph>
- </form>
- {% buttons %}
+ 
+  {% buttons %}
    <button name="submit" class="btn btn-primary">Save topic</button>
- {% endbuttons %}
+  {% endbuttons %}
+
+  <input type="hidden" name="next" value="{% url 'learning_logs:topics' %}"/>
+ </form>
 
 {% endblock content %}
