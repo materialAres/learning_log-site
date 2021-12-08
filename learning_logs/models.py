@@ -46,10 +46,14 @@ class Entry(models.Model):
 
 
 class ToDo(models.Model):
+    """What we will learn in the future about a topic"""
     topic = models.ForeignKey(Topic, on_delete=models.CASCADE, editable=False)
     text = models.CharField(max_length=200)
     date_added = models.DateTimeField(auto_now_add=True)
     due_date = models.DateField("Due date (The date must be in the format MM/DD/YYYY)", validators=[past_or_future_date])
+
+    class Meta:
+            verbose_name_plural = "todos"
 
     def __str__(self):
         if len(self.text) > 50:

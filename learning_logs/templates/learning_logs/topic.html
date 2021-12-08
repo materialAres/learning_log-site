@@ -11,9 +11,14 @@
 {% block content %}
                           
   <p>
-   <a href="{% url 'learning_logs:new_entry' topic.id %}">Add a new entry</a>
+   <div class="pb-4 mb-2 border-bottom">
+   <a href="{% url 'learning_logs:new_entry' topic.id %}">Add a new entry - </a>
+   <a href="{% url 'learning_logs:new_todo' topic.id %}">New ToDo</a>
+   </div>
   </p>
 
+  <div class="pb-4 mb-4 border-bottom">
+  <h4>What I have learned so far:</h4>
   {% for entry in entries %}
    <div class="card mb-3">
     <h4 class="card-header">
@@ -27,6 +32,24 @@
   {% empty %}
    <p>There are no entries for this topic yet.</p>
   {% endfor %}
+  </div>
+
+  <div>
+  <h4>What to learn next:</h4>
+  {% for todo in todos %}
+   <div class="card mb-3">
+    <h4 class="card-header">
+     <p>Due date: {{ todo.due_date|date:'M d, Y' }}</p>
+     
+    </h4>
+    <div class="card-body">
+     {{ todo.text|linebreaks }}
+    </div>
+   </div>
+  {% empty %}
+   <p>There are no ToDo for this topic yet.</p>
+  {% endfor %}
+  </div>
   
 
 {% endblock content %}

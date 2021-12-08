@@ -36,7 +36,8 @@ def topic(request, topic_id):
     check_topic_owner(topic.owner, request.user)
 
     entries = topic.entry_set.order_by('-date_added')
-    context = {'topic': topic, 'entries': entries}
+    todos = topic.todo_set.order_by('due_date')
+    context = {'topic': topic, 'entries': entries, 'todos': todos}
     return render(request, 'learning_logs/topic.html', context)
 
 
