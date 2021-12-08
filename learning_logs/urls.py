@@ -21,5 +21,8 @@ urlpatterns = [
     path('new_entry/<int:topic_id>/', views.new_entry, name='new_entry'),
 
     # Edit an entry
-    path('edit_entry/<int:entry_id>/', views.edit_entry, name='edit_entry')
+    path('edit_entry/<int:entry_id>/', views.edit_entry, name='edit_entry'),
+
+    # Create a new ToDo
+    path('new_todo/<int:topic_id>/', views.new_todo, name='new_todo'),
 ]

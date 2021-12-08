@@ -4,7 +4,7 @@ Filly, through them we send an http request and we receive a response."""
 from django.shortcuts import render, redirect, get_object_or_404   # redirect allows the program to redirect to another page/url, in this case it redirects the user from the topic-submission page to the topics page.
 from django.contrib.auth.decorators import login_required
 from .models import Entry, Topic
-from .forms import TopicForm, EntryForm
+from .forms import TopicForm, EntryForm, ToDoForm
 from django.http import Http404
 
 
@@ -96,4 +96,24 @@ def edit_entry(request, entry_id):
 
     context = {'entry': entry, 'topic': topic, 'form': form}
     return render(request, 'learning_logs/edit_entry.html', context)
+
+
+@login_required
+def new_todo(request, topic_id):
+    topic = Topic.objects.get(id=topic_id)
+
+    check_topic_owner(topic.owner, request.user)
+
+    if request.method != 'POST':
+        form = ToDoForm()
+    else:
+        form = ToDoForm(data=request.POST)
+        if form.is_valid():
+            new_todo = form.save(commit=False)
+            new_todo.topic = topic 
+            new_todo.save()
+            return redirect('learning_logs:topic', topic_id=topic_id) # At the end, redirect the user to another url (in this case 'topic'). IMPORTANT: the url must exist in your urls.py section (obv :D)!
+
+    context = {'topic': topic, 'form': form}
+    return render(request, 'learning_logs/new_todo.html', context)
      

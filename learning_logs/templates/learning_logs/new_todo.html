@@ -1,0 +1,21 @@
+{% extends "learning_logs/base.html" %}
+{% load bootstrap4 %}
+
+
+{% block content %}
+
+ <h3><a href="{% url 'learning_logs:topic' topic.id %}">{{ topic }}</a></h3>  <!This shows the name of the topic to which the entry is related.>
+
+ <p>Add something you will learn next:</p>
+  <form action="{% url 'learning_logs:new_todo' topic.id %}"method='post'>
+   {% csrf_token %}
+   {% bootstrap_form form %}
+
+   {% buttons %}
+    <button name='submit' class="btn btn-primary">Add To Do</button>
+   {% endbuttons %}
+   
+   <input type="hidden" name="next" value="{% url 'learning_logs:topic' topic.id %}"/>
+  </form>
+
+{% endblock content %}
